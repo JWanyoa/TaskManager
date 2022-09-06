@@ -46,37 +46,44 @@ export default createStore({
             localStorage.setItem("TASKS", JSON.stringify(todos))
             state.todos = JSON.parse(localStorage.getItem(todos))
         },
-        EDIT_TASK(state, todo) {
-            // let todos = state.todos.concat(todo)
-            state.todos.forEach(t => {
-            // const index = state.todos.findIndex((todo) =>todo.id === t.id)
-            if(t.id == todo.id)
+        EDIT_TASK(state, {id}) {
+            var myTodo = JSON.parse(localStorage.getItem('TASKS'))
+            for (var i = 0; i < myTodo.length; i++) {
+                if(myTodo[i].id == id)
                 {
-                    // var mytodos = state.todos.splice(index, 1, todo);
-                    localStorage.setItem("TASKS", JSON.stringify(mytodos));
-                    state.todos = JSON.parse(localStorage.getItem("TASKS"));
+                    myTodo = state.todos
                 }
-            });
-            
+            }
+            localStorage.setItem('TASKS', JSON.stringify(myTodo));
         },
-        DELETE_TODO(state, todoId)
+        DELETE_TODO(state, {id})
         {
-            let todos = state.todos.filter(t => t.id != todoId)
-            state.todos = todos
+            let tasks = state.todos.filter(t => t.id != id)
+            state.todos = tasks
+            var myTodo = JSON.parse(localStorage.getItem('TASKS'))
+            for (var i = 0; i < myTodo.length; i++) {
+                if(myTodo[i].id == id)
+                {
+                    myTodo = state.todos
+                }
+            }
+            localStorage.setItem('TASKS', JSON.stringify(myTodo));
         },
         TOGGLE_TODO(state, { id, completed }) {
+            //mark tasks as completed
             state.todos.find(todo => todo.id == id).completed = completed
+            var myTodo = JSON.parse(localStorage.getItem('TASKS'))
+            for (var i = 0; i < myTodo.length; i++) {
+                if(myTodo[i].id == id)
+                {
+                    myTodo[i].completed = completed;
+                }
+            }
+            localStorage.setItem('TASKS', JSON.stringify(myTodo)); 
         }
     },
     actions: {
-        // addTodo(todo) {
-        //     this.todos.push(todo);
-        // },
-        // addTodo({commit},title){
-        //     const response = await axios.post(`https://tychak.github.io/`,
-        //     {title:title,date_added:false})
-        //     commit('addTodo',response.data)
-        // },
+        
         fetchTodos({commit}) {
             return axios.get('https://tychak.github.io/')
                 .then(response => {
@@ -85,22 +92,15 @@ export default createStore({
         },
         addTodo({commit}, todo) {
             commit('NEW_TASK', todo)
-            // let myData = JSON.stringify(todo)
-            // return axios
-            // .post('https://tychak.github.io/', {myData})
-            // .then(response=>{
-            //     localStorage.setItem("myTasks", response.data.myTasks)
-            //     commit('newTask', respose.data)
-            // })
         },
-        deleteTodos({commit}, todo) {
-            commit("DELETE_TODO", todo.id)
+        deleteTodos(context, {id}) {
+            context.commit("DELETE_TODO", {id})
         },
-        editTodos({ commit }, todo) {
-            commit('EDIT_TASK', todo)
+        editTodos(context, {id}) {
+            context.commit('EDIT_TASK', {id})
         },
         toggleTodo(context, { id, completed }) {
-            //Api call that will toggle the completed state of the todo in the database 
+            //Call to toggle completed tasks
             context.commit('TOGGLE_TODO', { id, completed })
         }
     }

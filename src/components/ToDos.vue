@@ -6,7 +6,7 @@
              <div class="container-fluid">
                 <div class="col-md-12">
                    <div class="card shadow">
-                      <div class="card-body">
+                      <div class="card-body table-responsive">
                          <table class="table table-hover table-stripped">
                             <thead>
                                <AddToDo />
@@ -17,7 +17,7 @@
                                   <th>Date Added</th>
                                   <th>Task Deadline</th>
                                   <th>Date Completed</th>
-                                  <th>State of Completion</th>
+                                  <th>Status of Completion</th>
                                   <th>Action</th>
                                </tr>
                             </thead>
@@ -30,12 +30,12 @@
                                   <td>{{todo.date_added}}</td>
                                   <td>{{todo.deadline}}</td>
                                   <td>{{todo.date_completed}}</td>
-                                  <td v-if="!completed"><button type="button" @click="toggleComplete" class="btn btn-info">Mark As Completed</button></td>
-                                  <td v-else>Completed</td>
+                                  <td v-if="todo.completed != true"><button type="button" @click="toggleTodo(todo.id, todo.completed)" class="btn btn-info">Mark as Completed</button></td>
+                                  <td v-else><button type="button" @click="toggleTodo(todo.id, todo.completed)" class="btn btn-danger">Mark as Incomplete</button></td>
                                   <span style="display:none">{{i=todo.id}}</span>
                                   <td>
                                     <button class="btn btn-primary btn-sm" data-toggle="modal" :data-target="'#editModal'+todo.id"><i class="fa fa-pencil"></i>&nbsp;<span class="d-lg-none">Edit Task</span></button> &nbsp;
-                                    <button class="btn btn-danger btn-sm"  v-on:click="deleteTodo(todo)"><i class="fa fa-trash"></i>&nbsp;<span class="d-lg-none">Delete Task</span></button>
+                                    <button class="btn btn-danger btn-sm"  v-on:click="deleteTodo(todo.id)"><i class="fa fa-trash"></i>&nbsp;<span class="d-lg-none">Delete Task</span></button>
                                   </td>
                                   <div class="modal fade" :id="'editModal'+todo.id" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                                      <div class="modal-dialog">
@@ -63,7 +63,7 @@
                                                        <input class="form-control" type="date" name='date_completed' placeholder='Date Completed' v-model="todo.date_completed"/>
                                                     </div>
                                                     <div>
-                                                       <button v-on:click="editTodo" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Edit Task</button>
+                                                       <button v-on:click="editTodo(todo.id)" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Edit Task</button>
                                                     </div>
                                                  </div>
                                               </form>
@@ -88,6 +88,7 @@
           </div>
        </div>
     </div>
+   <div class="container-fluid">
     <div class="row mb-4">
       <div class="col-md-6">
          <div class="container mt-4">
@@ -122,6 +123,7 @@
          </div>
       </div>
     </div>
+   </div>
  </template>
  <script>
     import AddToDo from './AddToDo.vue'
@@ -135,12 +137,12 @@
             ...mapState({
                 todos: state =>state.todos
             }),
-            ...mapActions(["editTodos"]),
+            ...mapActions(["editTodos", "deleteTodos"]),
             ...mapGetters(["completeTodos", "incompleteTodos"]),
         },
         mounted()
         {
-            this.$store.dispatch('fetchTodos', 'editTodos');
+            this.$store.dispatch('fetchTodos', 'editTodos', 'deleteTodos');
         },
         data(){
             return{
@@ -164,13 +166,13 @@
                completed: completed == true ? false : true,
                });
             },
-            deleteTodo(todo)
+            deleteTodo(id)
             {
-                this.$store.dispatch('deleteTodos', todo)
+                this.$store.dispatch('deleteTodos', {id})
             },
-            editTodo()
+            editTodo(id)
             {
-                this.$store.dispatch('editTodos', this.todo)
+                this.$store.dispatch('editTodos', {id})
             },
             addTask()
             {
