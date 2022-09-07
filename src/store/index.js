@@ -11,10 +11,6 @@ export default createStore({
         myTodos: []
     },
     getters: {
-        // getTodos(state, todos)
-        // {
-        //     return state.todos=todos
-        // }
         incompleteTodos(state) {
             return state.todos.filter(todo => todo.completed == false)
         },
@@ -22,17 +18,7 @@ export default createStore({
             return state.todos.filter(todo => todo.completed == true)
         }
     },
-    mutations: {
-        // SET_TASKS(state, todos) {
-        //     state.todos = todos
-        //     window.localStorage.JSON.stringify(todos)
-        // },
-        // NEW_TASK(state, todo) {
-        //     let todos = state.todos.concat(todo)
-        //     state.todos = todos
-        //     console.log(todo)
-        // },
-        
+    mutations: {    
         SET_TASKS(state, todos)
         {
             // state.todos = todos

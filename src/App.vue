@@ -1,6 +1,5 @@
 <template>
   <!-- <Navbar /> -->
-  <FilterToDo />
   <ToDos />
 </template>
 
