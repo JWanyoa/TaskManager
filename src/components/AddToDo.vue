@@ -24,6 +24,7 @@
                                   <input class="form-control" disabled type="date" name='date_added' placeholder='Date Added' v-model="todo.date_added"/>
                                </div>
                                <div class="form-group">
+                                 <label>Deadline</label>
                                   <input class="form-control" type="date" name='deadline' placeholder='Deadline' v-model="todo.deadline"/>
                                </div>
                                <div class="form-group">
@@ -51,7 +52,9 @@
  </template>
  <script>
     import { mapActions } from 'vuex';
-     
+    let arrayFromStorage = JSON.parse(localStorage.getItem("TASKS"))
+   let arrayLength = arrayFromStorage.length
+   arrayLength = JSON.stringify(++arrayLength)
     export default {
       setup()
       {
@@ -63,7 +66,7 @@
          return{
             todo:
                {
-                  id:'',
+                  id:arrayLength,
                   title: '',
                   description : '',
                   date_added : new Date().toISOString().slice(0,10),

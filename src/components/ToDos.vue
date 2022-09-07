@@ -1,7 +1,6 @@
 <template>
     <div>
        <div>
-          <h1>Tasks</h1>
           <div class="">
              <div class="container-fluid">
                 <div class="col-md-12">
@@ -15,12 +14,12 @@
                         <AddToDo />
                         <div class="row">
                               <div class="col-sm-6 col-lg-3 m-15px-tb" v-for="todo in todos" :key="todo.id">
-                                 <div class="media2 box-shadow-only-hover hover-top alert-danger border-all-2 p-15px row mr-2" v-if="todo.completed != true">
+                                 <div class="media2 box-shadow-only-hover hover-top alert-danger border-all-2 p-15px row container-fluid" v-if="todo.completed != true">
                                     <a class="overlay-link" href="#"></a>
-                                    <div class="icon-50 theme-bg white-color border-radius-50 d-inline-block">
+                                    <div class="icon-50 theme-bg white-color border-radius-50 d-inline-block col-md-2">
                                           <i class="number">{{todo.title.substring(0,1)}}</i>
                                     </div>
-                                    <div class="p-20px-l media-body">
+                                    <div class="p-20px-l col-9">
                                           <span class="theme-bg white-color p-0px-tb p-10px-lr font-small border-radius-15" v-if="todo.completed != true">Incomplete</span>
                                           <span class="theme2nd-bg white-color p-0px-tb p-10px-lr font-small border-radius-15" v-else>Complete</span>
                                           <h6 class="m-5px-tb">{{todo.title}}</h6>
@@ -28,21 +27,21 @@
                                           <p class="m-0px font-small"><i class="fa fa-clock"></i> Deadline: {{todo.deadline}}</p>
                                           <p class="m-0px font-small"><i class="fa fa-calendar"></i> Date Added: {{todo.date_added}}</p>
                                     </div>
-                                    <div class="col-md-2" style="position: absolute; margin-left:230px; margin-top: -12px">
-                                       <ul style="list-style:none;" class="d-flex flex-column justify-content-between">
-                                          <li><button type="button" class="btn btn-success btn-sm mb-1" @click="toggleTodo(todo.id, todo.completed)"><i class="fa fa-check"></i></button></li>
-                                          <li><button class="btn btn-info btn-sm mb-1" data-toggle="modal" :data-target="'#editModal'+todo.id"><i class="fa fa-pencil"></i></button></li>
-                                          <li><button class="btn btn-danger btn-sm mb-1"  v-on:click="deleteTodo(todo.id)"><i class="fa fa-trash"></i></button></li>
+                                    <div class="col-1">
+                                       <ul style="list-style:none;" class="d-lg-inline  d-flex flex-column float-right mt-0">
+                                          <li><button type="button" class="btn btn-success btn-sm mb-1" @click="toggleTodo(todo.id, todo.completed)"><i class="fa fa-check"></i> <span class="d-none d-lg-inline">Mark</span></button></li>
+                                          <li><button class="btn btn-info btn-sm mb-1" data-toggle="modal" :data-target="'#editModal'+todo.id"><i class="fa fa-pencil"></i> <span class="d-none d-lg-inline">Edit</span></button></li>
+                                          <li><button class="btn btn-danger btn-sm mb-1"  v-on:click="deleteTodo(todo.id)"><i class="fa fa-trash"></i> <span class="d-none d-lg-inline">Delete</span></button></li>
                                        </ul>
                                     </div>
                                  </div>
 
-                                 <div class="media1 box-shadow-only-hover alert-success hover-top border-all-1 p-15px row mr-2"  v-else>
+                                 <div class="media1 box-shadow-only-hover alert-success hover-top border-all-1 p-15px row container-fluid"  v-else>
                                     <a class="overlay-link" href="#"></a>
-                                    <div class="icon-50 theme2nd-bg white-color border-radius-50 d-inline-block">
+                                    <div class="icon-50 theme2nd-bg white-color border-radius-50 d-inline-block col-md-2">
                                           <i class="number">{{todo.title.substring(0,1)}}</i>
                                     </div>
-                                    <div class="p-20px-l media-body">
+                                    <div class="p-20px-l col-9 float-right">
                                           <span class="theme-bg white-color p-0px-tb p-10px-lr font-small border-radius-15" v-if="todo.completed != true">Incomplete</span>
                                           <span class="theme2nd-bg white-color p-0px-tb p-10px-lr font-small border-radius-15" v-else>Complete</span>
                                           <h6 class="m-5px-tb">{{todo.title}}</h6>
@@ -50,15 +49,14 @@
                                           <p class="m-0px font-small"><i class="fa fa-clock"></i> {{todo.deadline}}</p>
                                           <p class="m-0px font-small"><i class="fa fa-calendar"></i> {{todo.date_added}}</p>
                                     </div>
-                                    <div class="col-md-2" style="position: absolute; margin-left:230px; margin-top: -12px">
-                                       <ul style="list-style:none;" class="d-flex flex-column justify-content-between">
-                                          <li><button type="button" class="btn btn-warning btn-sm mb-1" @click="toggleTodo(todo.id, todo.completed)"><i class="fa fa-window-close"></i></button></li>
-                                          <li><button class="btn btn-info btn-sm mb-1" data-toggle="modal" :data-target="'#editModal'+todo.id"><i class="fa fa-pencil"></i></button></li>
-                                          <li><button class="btn btn-danger btn-sm mb-1"  v-on:click="deleteTodo(todo.id)"><i class="fa fa-trash"></i></button></li>
+                                    <div class="col-1">
+                                       <ul style="list-style:none;" class="d-lg-inline d-flex flex-column float-right mt-0">
+                                          <li><button type="button" class="btn btn-warning btn-sm mb-1" @click="toggleTodo(todo.id, todo.completed)"><i class="fa fa-window-close"></i> <span class="d-none d-lg-inline">Unmark</span></button></li>
+                                          <li><button class="btn btn-info btn-sm mb-1" data-toggle="modal" :data-target="'#editModal'+todo.id"><i class="fa fa-pencil"></i> <span class="d-none d-lg-inline">Edit</span></button></li>
+                                          <li><button class="btn btn-danger btn-sm mb-1"  v-on:click="deleteTodo(todo.id)"><i class="fa fa-trash"></i> <span class="d-none d-lg-inline">Delete</span></button></li>
                                        </ul>
                                     </div>
                                  </div>
-
 
                                  <div class="modal fade" :id="'editModal'+todo.id" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                                      <div class="modal-dialog">
@@ -105,161 +103,11 @@
                         </div>
                      </div>
                   </section>
-                   <!-- <div class="card shadow">
-                      <div class="card-body">
-                         <table class="table table-hover table-stripped">
-                            <thead>
-                               <AddToDo />
-                               <tr>
-                                  <th>Task ID</th>
-                                  <th>Task Title</th>
-                                  <th>Task Description</th>
-                                  <th>Date Added</th>
-                                  <th>Task Deadline</th>
-                                  <th>Date Completed</th>
-                                  <th>Status of Completion</th>
-                                  <th>Action</th>
-                               </tr>
-                            </thead>
-                            <tbody>
-                               <tr v-for="todo in todos" :key="todo.id">
-                                  <td v-if="todo.id == ''">{{todo.id = ++i}}</td>
-                                  <td v-else>{{todo.id}}</td>
-                                  <td>{{todo.title}}</td>
-                                  <td>{{todo.description}}</td>
-                                  <td>{{todo.date_added}}</td>
-                                  <td>{{todo.deadline}}</td>
-                                  <td>{{todo.date_completed}}</td>
-                                  <td v-if="todo.completed != true"><button type="button" @click="toggleTodo(todo.id, todo.completed)" class="btn btn-info" id="completed">Mark as Completed</button></td>
-                                  <td v-else><button type="button" @click="toggleTodo(todo.id, todo.completed)" class="btn btn-danger">Mark as Incomplete</button></td>
-                                  <span style="display:none">{{i=todo.id}}</span>
-                                  <td>
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal" :data-target="'#editModal'+todo.id"><i class="fa fa-pencil"></i>&nbsp;<span class="d-lg-none">Edit Task</span></button> &nbsp;
-                                    <button class="btn btn-danger btn-sm"  v-on:click="deleteTodo(todo.id)"><i class="fa fa-trash"></i>&nbsp;<span class="d-lg-none">Delete Task</span></button>
-                                  </td>
-                                  <div class="modal fade" :id="'editModal'+todo.id" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
-                                     <div class="modal-dialog">
-                                        <div class="modal-content">
-                                           <div class="modal-header">
-                                              <h3 class="modal-title float-right" id="lineModalLabel">Edit Task</h3>
-                                              <button type="button" class="close float-left" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                           </div>
-                                           <div class="modal-body">
-                                              <form @submit="onSubmit">
-                                                 <div id='addr0'>
-                                                    <div class="form-group">
-                                                       <input class="form-control" type="text" name='title'  placeholder='Title' v-model="todo.title"/>
-                                                    </div>
-                                                    <div class="form-group">
-                                                       <textarea class="form-control" name='description' v-model="todo.description"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                       <input class="form-control" disabled type="date" name='date_added' placeholder='Date Added' v-model="todo.date_added"/>
-                                                    </div>
-                                                    <div class="form-group">
-                                                       <input class="form-control" type="date" name='deadline' placeholder='Deadline' v-model="todo.deadline"/>
-                                                    </div>
-                                                    <div class="form-group">
-                                                       <input class="form-control" type="date" name='date_completed' placeholder='Date Completed' v-model="todo.date_completed"/>
-                                                    </div>
-                                                    <div>
-                                                       <button v-on:click="editTodo(todo.id)" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i> Edit Task</button>
-                                                    </div>
-                                                 </div>
-                                              </form>
-                                           </div>
-                                           <div class="modal-footer">
-                                              <div class="btn-group btn-group-justified" role="group" aria-label="group button">
-                                                 <div class="btn-group" role="group">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal"  role="button">Close</button>
-                                                 </div>
-                                              </div>
-                                           </div>
-                                        </div>
-                                     </div>
-                                  </div>
-                               </tr>
-                            </tbody>
-                         </table>
-                      </div>
-                   </div> -->
                 </div>
              </div>
           </div>
        </div>
     </div>
-   <!-- <div class="container-fluid">
-    <div class="row mb-4">
-      <div class="col-md-6">
-         <div class="container mt-4">
-            <div class="card">
-               <div class="card-header"><i class="fa fa-list-alt"></i> Incomplete tasks</div>
-               <div class="card-body">
-                  <div class="todo-types">
-                     <div class="incomplete" v-if="incompleteTodos.length > 0">
-                        <ul class="list-group event-list">
-                           <li v-for="todo in incompleteTodos" v-bind:key="todo.id">
-                              <time datetime="{todo.date_completed}">
-                                 <span class="day">4</span>
-                                 <span class="month">Jul</span>
-                                 <span class="year">2014</span>
-                                 <span class="time">ALL DAY</span>
-                              </time>
-                              <img alt="Task Image" src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dG9kb3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" />
-                              <div class="info">
-                                 <h2 class="title">{{todo.title}}</h2>
-                                 <p class="desc">{{todo.description}}</p>
-                                 <p class="desc"><em>Deadline: {{todo.deadline}}</em></p>
-                                 <p class="desc"><em>Date Added: {{todo.date_added}}</em></p>
-                              </div>
-                              <div class="actionsList">
-                                 <ul>
-                                    <li class="finished" style="width:33%;"><a href="#"  @click="toggleTodo(todo.id, todo.completed)" ><span class="fa fa-check"></span> Mark</a></li>
-                                    <li class="editTask" style="width:34%;"><a href="#" data-toggle="modal" :data-target="'#editModal'+todo.id"><span class="fa fa-pencil"></span> Edit</a></li>
-                                    <li class="deleteTask" style="width:33%;"><a href="#"  v-on:click="deleteTodo(todo.id)"><span class="fa fa-trash"></span> Delete</a></li>
-                                 </ul>
-                              </div>
-                           </li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-6">
-         <div class="container mt-4">
-            <div class="card">
-               <div class="card-header"><i class="fa fa-list"></i> Complete tasks</div>
-               <div class="card-body">
-                  <div class="todo-types">
-                     <div class="complete" v-if="completeTodos.length > 0">
-                        <ul class="list-group event-list">
-                           <li v-for="todo in completeTodos" v-bind:key="todo.id">
-                              <img alt="Task Image" src="../assets/complete.jpg" />
-                              <div class="info">
-                                 <h2 class="title">{{todo.title}}</h2>
-                                 <p class="desc">{{todo.description}}</p>
-                                 <p class="desc">Deadline: {{todo.deadline}}</p>
-                                 <p class="desc">Date Added: {{todo.date_added}}</p>
-                              </div>
-                              <div class="actionsList">
-                                 <ul>
-                                    <li class="finished" style="width:33%;"><a href="#"  @click="toggleTodo(todo.id, todo.completed)" ><span class="fa fa-times"></span> Unmark</a></li>
-                                    <li class="editTask" style="width:34%;"><a href="#" data-toggle="modal" :data-target="'#editModal'+todo.id"><span class="fa fa-pencil"></span> Edit</a></li>
-                                    <li class="deleteTask" style="width:33%;"><a href="#"  v-on:click="deleteTodo(todo.id)"><span class="fa fa-trash"></span> Delete</a></li>
-                                 </ul>
-                              </div>
-                           </li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-    </div>
-   </div> -->
    
  </template>
 
@@ -267,6 +115,7 @@
  <script>
     import AddToDo from './AddToDo.vue'
     import { mapState, mapGetters } from 'vuex';
+    
     export default{
         name: "ToDos",
         components: {
@@ -288,7 +137,6 @@
         },
         data(){
             return{
-               i:3,
                show:'show',
                noShow: '',
                todo:{
@@ -608,6 +456,7 @@ $(document).ready(function() {
 }
 .icon-50 i.number {
     font-style: normal;
+    top:50%;
 }
 .icon-50 i {
     line-height: 50px;
